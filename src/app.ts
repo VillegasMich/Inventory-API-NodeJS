@@ -2,10 +2,10 @@ import express from "express";
 import { itemRouter } from "./routes/itemRouter";
 import { handleError } from "./middleware/handleError";
 
-const port = 3000;
+const port = 8080;
 
 const app = express();
-app.use(express.json);
+app.use(express.json());
 
 app.use("/items", itemRouter);
 
