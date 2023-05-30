@@ -1,6 +1,6 @@
 import { Item, PrismaClient } from "@prisma/client";
 import { prisma } from "../../database/prismaConnection";
-import { CreateItem } from "../DTO/itemDTO";
+import { CreateItem, UpdateItem } from "../DTO/itemDTO";
 
 const getAll = (prisma: PrismaClient) => (): Promise<Item[]> =>
     prisma.item.findMany();
@@ -23,8 +23,21 @@ const create =
             },
         });
 
+const update = (prisma: PrismaClient) => (updateItem: UpdateItem) =>
+    prisma.item.update({
+        where: {
+            id: updateItem.id,
+        },
+        data: {
+            name: updateItem.name,
+            price: updateItem.price,
+            location: updateItem.location,
+        },
+    });
+
 export const itemRepo = {
     getAll: getAll(prisma),
     getById: getById(prisma),
     create: create(prisma),
+    update: update(prisma),
 };

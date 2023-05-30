@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { itemService } from "../services/itemServices";
 import { Item } from "@prisma/client";
-import { CreateItem } from "../DTO/itemDTO";
+import { CreateItem, UpdateItem } from "../DTO/itemDTO";
 
 const getAll = async (
     req: Request,
@@ -46,8 +46,22 @@ const create = async (
     }
 };
 
+const update = async (
+    req: Request<never, never, UpdateItem>,
+    res: Response<Item>,
+    next: NextFunction
+) => {
+    try {
+        const updatedItem = await itemService.update(req.body);
+        res.send(updatedItem);
+    } catch (error) {
+        next(error);
+    }
+};
+
 export const itemController = {
     getAll,
     getById,
     create,
+    update,
 };
