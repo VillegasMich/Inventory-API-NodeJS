@@ -1,6 +1,6 @@
 import { Item, PrismaClient } from "@prisma/client";
 import { prisma } from "../../database/prismaConnection";
-import { CreateItem, UpdateItem } from "../DTO/itemDTO";
+import { CreateItem, MovedItem, UpdateItem } from "../DTO/itemDTO";
 
 const getAll = (prisma: PrismaClient) => (): Promise<Item[]> =>
     prisma.item.findMany();
@@ -65,6 +65,16 @@ const update = (prisma: PrismaClient) => (updateItem: UpdateItem) =>
         },
     });
 
+const move = (prisma: PrismaClient) => (movedItem: MovedItem) =>
+    prisma.item.update({
+        where: {
+            id: movedItem.id,
+        },
+        data: {
+            location: movedItem.location.toLowerCase(),
+        },
+    });
+
 const removeById = (prisma: PrismaClient) => (id: number) =>
     prisma.item.delete({
         where: {
@@ -79,5 +89,6 @@ export const itemRepo = {
     getByPrice: getByPrice(prisma),
     create: create(prisma),
     update: update(prisma),
+    move: move(prisma),
     remove: removeById(prisma),
 };

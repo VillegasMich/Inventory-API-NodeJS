@@ -8,4 +8,5 @@ export const itemRouter = Router()
     .get("/price/:filter/:price", itemController.getByPrice)
     .post("/", itemController.create)
     .put("/", itemController.update)
+    .put("/move", itemController.move)
     .delete("/:id", itemController.removeById);

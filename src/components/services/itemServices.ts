@@ -1,6 +1,6 @@
 import { Item } from "@prisma/client";
 import { itemRepo } from "../repositories/itemRepo";
-import { CreateItem, UpdateItem } from "../DTO/itemDTO";
+import { CreateItem, MovedItem, UpdateItem } from "../DTO/itemDTO";
 
 const getAll = async (): Promise<Item[]> => {
     const items = await itemRepo.getAll();
@@ -35,6 +35,11 @@ const update = async (updateItem: UpdateItem): Promise<Item> => {
     return item;
 };
 
+const move = async (movedItem: MovedItem) => {
+    const item = await itemRepo.move(movedItem);
+    return item;
+};
+
 const removeById = async (id: number) => {
     await itemRepo.remove(id);
 };
@@ -46,5 +51,6 @@ export const itemService = {
     getByPrice,
     create,
     update,
+    move,
     removeById,
 };

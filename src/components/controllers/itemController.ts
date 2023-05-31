@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { itemService } from "../services/itemServices";
 import { Item } from "@prisma/client";
-import { CreateItem, UpdateItem } from "../DTO/itemDTO";
+import { CreateItem, MovedItem, UpdateItem } from "../DTO/itemDTO";
 
 const getAll = async (
     req: Request,
@@ -96,6 +96,19 @@ const update = async (
     }
 };
 
+const move = async (
+    req: Request<never, never, MovedItem>,
+    res: Response<Item>,
+    next: NextFunction
+) => {
+    try {
+        const item = await itemService.move(req.body);
+        res.send(item);
+    } catch (error) {
+        next(error);
+    }
+};
+
 const removeById = async (
     req: Request<{ id: number }>,
     res: Response,
@@ -116,5 +129,6 @@ export const itemController = {
     getByPrice,
     create,
     update,
+    move,
     removeById,
 };
