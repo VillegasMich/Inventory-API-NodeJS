@@ -5,4 +5,5 @@ export const itemRouter = Router()
     .get("/", itemController.getAll)
     .get("/:id", itemController.getById)
     .post("/", itemController.create)
-    .put("/", itemController.update);
+    .put("/", itemController.update)
+    .delete("/:id", itemController.removeById);

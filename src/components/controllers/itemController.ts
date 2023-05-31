@@ -59,9 +59,23 @@ const update = async (
     }
 };
 
+const removeById = async (
+    req: Request<{ id: number }>,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        await itemService.removeById(+req.params.id);
+        res.sendStatus(204);
+    } catch (error) {
+        next(error);
+    }
+};
+
 export const itemController = {
     getAll,
     getById,
     create,
     update,
+    removeById,
 };

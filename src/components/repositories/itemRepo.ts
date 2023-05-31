@@ -35,9 +35,17 @@ const update = (prisma: PrismaClient) => (updateItem: UpdateItem) =>
         },
     });
 
+const removeById = (prisma: PrismaClient) => (id: number) =>
+    prisma.item.delete({
+        where: {
+            id: id,
+        },
+    });
+
 export const itemRepo = {
     getAll: getAll(prisma),
     getById: getById(prisma),
     create: create(prisma),
     update: update(prisma),
+    remove: removeById(prisma),
 };

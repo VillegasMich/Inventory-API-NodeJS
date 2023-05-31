@@ -22,9 +22,14 @@ const update = async (updateItem: UpdateItem): Promise<Item> => {
     return item;
 };
 
+const removeById = async (id: number) => {
+    await itemRepo.remove(id);
+};
+
 export const itemService = {
     getAll,
     getById,
     create,
     update,
+    removeById,
 };
