@@ -17,6 +17,14 @@ const getByName = async (name: string): Promise<Item[] | undefined> => {
     return items ?? undefined;
 };
 
+const getByPrice = async (
+    filter: "higher" | "lower",
+    price: number
+): Promise<Item[] | undefined> => {
+    const items = await itemRepo.getByPrice(filter, price);
+    return items ?? undefined;
+};
+
 const create = async (createItem: CreateItem): Promise<Item> => {
     const item = await itemRepo.create(createItem);
     return item;
@@ -35,6 +43,7 @@ export const itemService = {
     getAll,
     getById,
     getByName,
+    getByPrice,
     create,
     update,
     removeById,

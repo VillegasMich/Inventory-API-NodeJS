@@ -32,6 +32,27 @@ const create =
             },
         });
 
+const getByPrice =
+    (prisma: PrismaClient) => (filter: "higher" | "lower", price: number) => {
+        if (filter === "higher") {
+            return prisma.item.findMany({
+                where: {
+                    price: {
+                        gte: price,
+                    },
+                },
+            });
+        } else if (filter === "lower") {
+            return prisma.item.findMany({
+                where: {
+                    price: {
+                        lte: price,
+                    },
+                },
+            });
+        }
+    };
+
 const update = (prisma: PrismaClient) => (updateItem: UpdateItem) =>
     prisma.item.update({
         where: {
@@ -55,6 +76,7 @@ export const itemRepo = {
     getAll: getAll(prisma),
     getById: getById(prisma),
     getByName: getByName(prisma),
+    getByPrice: getByPrice(prisma),
     create: create(prisma),
     update: update(prisma),
     remove: removeById(prisma),

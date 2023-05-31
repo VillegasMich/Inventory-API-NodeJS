@@ -52,6 +52,24 @@ const getByName = async (
     }
 };
 
+const getByPrice = async (
+    req: Request<{ filter: "higher" | "lower"; price: string }>,
+    res: Response<Item[]>,
+    next: NextFunction
+) => {
+    try {
+        const items = await itemService.getByPrice(
+            req.params.filter,
+            +req.params.price
+        );
+        if (items) {
+            res.send(items);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {}
+};
+
 const create = async (
     req: Request<never, never, CreateItem>,
     res: Response<Item>,
@@ -95,6 +113,7 @@ export const itemController = {
     getAll,
     getById,
     getByName,
+    getByPrice,
     create,
     update,
     removeById,
