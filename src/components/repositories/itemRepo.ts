@@ -26,9 +26,9 @@ const create =
     (createItem: CreateItem): Promise<Item> =>
         prisma.item.create({
             data: {
-                name: createItem.name,
+                name: createItem.name.toLowerCase(),
                 price: createItem.price,
-                location: createItem.location,
+                location: createItem.location.toLowerCase(),
             },
         });
 
@@ -38,9 +38,9 @@ const update = (prisma: PrismaClient) => (updateItem: UpdateItem) =>
             id: updateItem.id,
         },
         data: {
-            name: updateItem.name,
+            name: updateItem.name.toLowerCase(),
             price: updateItem.price,
-            location: updateItem.location,
+            location: updateItem.location.toLowerCase(),
         },
     });
 
