@@ -12,6 +12,15 @@ const getById = (prisma: PrismaClient) => (id: number) =>
         },
     });
 
+const getByName = (prisma: PrismaClient) => (name: string) =>
+    prisma.item.findMany({
+        where: {
+            name: {
+                contains: name,
+            },
+        },
+    });
+
 const create =
     (prisma: PrismaClient) =>
     (createItem: CreateItem): Promise<Item> =>
@@ -45,6 +54,7 @@ const removeById = (prisma: PrismaClient) => (id: number) =>
 export const itemRepo = {
     getAll: getAll(prisma),
     getById: getById(prisma),
+    getByName: getByName(prisma),
     create: create(prisma),
     update: update(prisma),
     remove: removeById(prisma),

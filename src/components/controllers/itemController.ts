@@ -33,6 +33,25 @@ const getById = async (
     }
 };
 
+const getByName = async (
+    req: Request<{ name: string }>,
+    res: Response<Item[]>,
+    next: NextFunction
+) => {
+    try {
+        const items = await itemService.getByName(
+            req.params.name.toLowerCase()
+        );
+        if (items) {
+            res.send(items);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
 const create = async (
     req: Request<never, never, CreateItem>,
     res: Response<Item>,
@@ -75,6 +94,7 @@ const removeById = async (
 export const itemController = {
     getAll,
     getById,
+    getByName,
     create,
     update,
     removeById,

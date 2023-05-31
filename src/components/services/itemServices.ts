@@ -7,9 +7,14 @@ const getAll = async (): Promise<Item[]> => {
     return items;
 };
 
-const getById = async (id: number): Promise<Item | null> => {
+const getById = async (id: number): Promise<Item | undefined> => {
     const item = await itemRepo.getById(id);
-    return item;
+    return item ?? undefined;
+};
+
+const getByName = async (name: string): Promise<Item[] | undefined> => {
+    const items = await itemRepo.getByName(name);
+    return items ?? undefined;
 };
 
 const create = async (createItem: CreateItem): Promise<Item> => {
@@ -29,6 +34,7 @@ const removeById = async (id: number) => {
 export const itemService = {
     getAll,
     getById,
+    getByName,
     create,
     update,
     removeById,
